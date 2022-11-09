@@ -214,10 +214,10 @@ const AssetBrowser = () => {
         },
         body: '{"Querystring": "Takterrasse"}'
       })
-      setTestData(await data.json())
-      console.log(testData);
+      return data.json()
     }
 
+    setTestData(fetchData())
     fetchData()
     async function run() {
       setPhotos(await performRequest(1));
