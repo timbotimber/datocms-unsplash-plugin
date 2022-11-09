@@ -20,8 +20,8 @@ import {
 } from 'react';
 import { Basic as Photo } from 'unsplash-js/dist/methods/photos/types';
 import s from './styles.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import Cell from '../components/Cell';
 
 const PER_PAGE = 30;
@@ -100,6 +100,7 @@ const colorOptions: Array<{ value: Color; label: string }> = [
 const AssetBrowser = () => {
   const ctx = useCtx<RenderAssetSourceCtx>();
   const [query, setQuery] = useState('');
+  const [testData, setTestData] = useState(['things', 'other things'])
   const [orientation, setOrientation] = useState<Orientation>('all');
   const [color, setColor] = useState<Color>('all');
   const [page, setPage] = useState(1);
@@ -115,9 +116,8 @@ const AssetBrowser = () => {
       ctx.select({
         resource: {
           url: `${photo.urls.raw}&w=2500&fm=jpg&q=80&fit=max`,
-          filename: `${
-            photo.alt_description?.substring(0, 30) || photo.id
-          }.jpg`,
+          filename: `${photo.alt_description?.substring(0, 30) || photo.id
+            }.jpg`,
         },
         author: photo.user.name,
         notes: photo.description || undefined,
@@ -155,17 +155,17 @@ const AssetBrowser = () => {
 
       const request = query
         ? unsplash.search.getPhotos({
-            query,
-            page,
-            perPage: PER_PAGE,
-            orientation: orientation === 'all' ? undefined : orientation,
-            color: color === 'all' ? undefined : color,
-          })
+          query,
+          page,
+          perPage: PER_PAGE,
+          orientation: orientation === 'all' ? undefined : orientation,
+          color: color === 'all' ? undefined : color,
+        })
         : unsplash.photos.list({
-            page,
-            perPage: PER_PAGE,
-            orderBy: OrderBy.POPULAR,
-          });
+          page,
+          perPage: PER_PAGE,
+          orderBy: OrderBy.POPULAR,
+        });
 
       const response = await request;
 
@@ -202,6 +202,23 @@ const AssetBrowser = () => {
   }, [page, setPage, setPhotos, setLoading, performRequest]);
 
   useEffect(() => {
+    console.log(testData);
+    async function fetchData() {
+
+      const data = await fetch('https://api.imageshop.no/Search2', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/json',
+          'Accept': 'application/json',
+          'token': '313f485e-4fc5-4a6f-bc46-dd7b895baf96'
+        },
+        body: '{"Querystring": "Takterrasse"}'
+      })
+      setTestData(await data.json())
+      console.log(testData);
+    }
+
+    fetchData()
     async function run() {
       setPhotos(await performRequest(1));
     }
@@ -234,14 +251,14 @@ const AssetBrowser = () => {
             onChange={(newValue) => setQuery(newValue)}
             className={s.search__input}
           />
-          <Button
+          {/* <Button
             type="submit"
             buttonSize="s"
             buttonType="primary"
             leftIcon={<FontAwesomeIcon icon={faSearch} />}
           >
             Search
-          </Button>
+          </Button> */}
         </div>
         <div className={s.searchFirstRow}>
           <div className={s.searchFilter}>
