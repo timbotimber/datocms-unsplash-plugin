@@ -124,3 +124,33 @@
 .colorSample.black_and_white {
   background: linear-gradient(to left, #eee 0%, #111 100%);
 }
+
+.imageContainer {
+  width: 200px
+}
+
+.grid {  
+  display: grid;
+  grid-gap: 8px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 30vw;
+  list-style: none;
+}
+ 
+.grid li {
+  grid-column:  1 / -1;
+  grid-row: span 2;
+}
+ 
+.grid figure,
+.grid img {
+  width: 100%;
+  height: 100%;
+}
+ 
+.grid img {
+  object-fit: cover;
+  background: #f5f3f4;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+}
+ 

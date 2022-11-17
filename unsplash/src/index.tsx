@@ -8,8 +8,8 @@ connect({
   assetSources() {
     return [
       {
-        id: 'unsplash',
-        name: 'Unsplash',
+        id: 'imageshop',
+        name: 'imageshop',
         icon: {
           type: 'svg',
           viewBox: '0 0 448 512',
